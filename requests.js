@@ -33,10 +33,10 @@ class RequestHandler{
     }
 
     async getWeather(locationData){
-      ;
-        let locationName = locationData.name
-        let locationLatitude = locationData.lat 
-        let locationLongitude = locationData.lon
+      
+        let locationName = locationData.name;
+        let locationLatitude = locationData.lat;
+        let locationLongitude = locationData.lon;
 
         console.log(locationLatitude, locationLongitude)
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationLatitude}&lon=${locationLongitude}&appid=${this.apiKey}&units=imperial`);
@@ -50,23 +50,30 @@ class RequestHandler{
     handleWeather(jsonResponse){
 
         console.log(jsonResponse);
-
+        
+        //Sunrise/S unset
         let requestTime = this.convertUnix(jsonResponse.dt)
         let sunriseTime = this.convertUnix(jsonResponse.sys.sunrise);
         let sunsetTime = this.convertUnix(jsonResponse.sys.sunset);
 
-        console.log(`Times: Request ${requestTime} sunrise ${sunriseTime} sunset ${sunsetTime}`)
+        console.log(`Times: Calculated: ${requestTime} sunrise ${sunriseTime} sunset ${sunsetTime}`)
 
-        console.log(jsonResponse.clouds);
-        console.log(jsonResponse.clouds.name);
+        //Temperatures
+        let currentTemp = jsonResponse.main.temp;
+        let maxTemp = jsonResponse.main.temp_max;
+        let minTemp = jsonResponse.main.temp_min;
 
-        console.log(jsonResponse.weather);
-        console.log(jsonResponse.weather.value);
+        console.log(`Current Temperature: ${currentTemp} Area High: ${maxTemp} Area Low: ${minTemp}`)
+
+        //Weather Status
+        let weatherStatus = jsonResponse.weather[0].main;
+
+        console.log(`Current Weather: ${weatherStatus}`)
+
     }
 
     convertUnix(unixTimestamp){
-
-        console.log('converting...')
+       
         // Create a new JavaScript Date object based on the timestamp
         // multiplied by 1000 so that the argument is in milliseconds, not seconds.
         let date = new Date(unixTimestamp * 1000);
@@ -74,11 +81,7 @@ class RequestHandler{
         let minutes = date.getMinutes();
         let seconds = date.getSeconds();
 
-        console.log(hours, minutes, seconds);
-
-        let formattedTime = `${hours}: ${minutes}: ${seconds}}`
-
-        console.log(formattedTime);
+        let formattedTime = `${hours}:${minutes}:${seconds}`
 
         return formattedTime;
     }
