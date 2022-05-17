@@ -3,16 +3,20 @@ searchField = document.querySelector('.searchField');
 
 requests = new RequestHandler('apiDoc.txt');
 
-searchBtn.addEventListener('click', someFunc)
+searchBtn.addEventListener('click', someFunc);
+searchField.addEventListener('keydown', anotherFunc);
 
-function someFunc(e) {
-    e.preventDefault()
-    console.log('hello');
-    let zipCode = searchField.value;
-    requests.getWeather(zipCode);
 
+function anotherFunc(e){
+    if(e.key === 'Enter') {
+        someFunc(e)
+    } 
 }
 
-// let answer = requests.getWeather(40220);
+function someFunc(e) {
+    e.preventDefault();
+    let zipCode = searchField.value;
+    console.log(zipCode);
+    requests.getLocation(zipCode);
+}
 
-// console.log(answer);
