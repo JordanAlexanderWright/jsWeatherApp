@@ -42,8 +42,44 @@ class RequestHandler{
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationLatitude}&lon=${locationLongitude}&appid=${this.apiKey}&units=imperial`);
 
         await response.json()
-            .then(jsonResponse => console.log(jsonResponse))
+            .then(jsonResponse => this.handleWeather(jsonResponse))
             .catch(error => (console.log('there was an error with the weather data', error)));
             
+    }
+
+    handleWeather(jsonResponse){
+
+        console.log(jsonResponse);
+
+        let requestTime = this.convertUnix(jsonResponse.dt)
+        let sunriseTime = this.convertUnix(jsonResponse.sys.sunrise);
+        let sunsetTime = this.convertUnix(jsonResponse.sys.sunset);
+
+        console.log(`Times: Request ${requestTime} sunrise ${sunriseTime} sunset ${sunsetTime}`)
+
+        console.log(jsonResponse.clouds);
+        console.log(jsonResponse.clouds.name);
+
+        console.log(jsonResponse.weather);
+        console.log(jsonResponse.weather.value);
+    }
+
+    convertUnix(unixTimestamp){
+
+        console.log('converting...')
+        // Create a new JavaScript Date object based on the timestamp
+        // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+        let date = new Date(unixTimestamp * 1000);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+
+        console.log(hours, minutes, seconds);
+
+        let formattedTime = `${hours}: ${minutes}: ${seconds}}`
+
+        console.log(formattedTime);
+
+        return formattedTime;
     }
 }
