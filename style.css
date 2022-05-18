@@ -1,0 +1,44 @@
+html {
+    font-size:large;
+}
+
+.weatherData {
+    /* visibility: hidden; */
+    border-style: inset;
+    box-sizing: content-box;
+    max-width: fit-content;
+    margin: 0 auto;
+    display: flex;
+}
+
+.searchBtn {
+
+}
+
+.heading {
+    border-style: solid;
+    border-width: 2px;
+    text-align: center;
+}
+
+#dataContainer{
+    list-style: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.first-color { 
+	background: #e7eaf6; 
+}
+	
+.second-color { 
+	background: #a2a8d3; 
+}
+
+.third-color { 
+	background: #38598b; 
+}
+
+.fourth-color { 
+	background: #113f67; 
+}

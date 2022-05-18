@@ -5,28 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Weather</title>
+    <title>Simple Weather</title>
 </head>
-<body>
+<body class ="fourth-color">
 
     <main>
-        <div class="display">
-            <header>Weather</header>
-
-            <div class="location"></div>
-            <div class="temperature"></div>
-            <div class="status"></div>
-            <div class="upcoming"></div>
-
-        </div>
 
         <form>
-            <input type="text" class="searchField">
-            <input type="button" value="Search" id="searchBtn">
+            <input type="text" class="searchField first-color" placeholder="Input your zip code...">
+            <input type="button" value="Search" id="searchBtn" class="first-color">
         </form>
 
+        <section class="weatherData first-color">
+            <header class="heading second-color">Weather</header>
+
+            <ul id="dataContainer" class="first-color">
+                <li id="location">location Placeholder</li>
+                <li id="temperature">Temperature Palceholer</li>
+                <li id="status">Weather Status Placeholder</li>
+                <li id="upcoming">UPcoming Weather Placeholder</li>
+            </ul>
+
+            <img id="weatherImage">
+        </section>
+
+        
     </main>
     <script src="requests.js"></script>
+    <script src="ui.js"></script>
     <script src="app.js"></script>
 
     <footer>
