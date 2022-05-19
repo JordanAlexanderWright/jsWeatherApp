@@ -61,33 +61,18 @@ class RequestHandler{
     handleWeather(jsonResponse){
 
         // I save data from the response into my weatherDataParsed object in order to send to my UI. 
-        console.log(jsonResponse);
-        
-        //Sunrise/ Sunset These do need to be converted from Unix
+        // Sunrise & Sunset These do need to be converted from Unix
 
         this.weatherDataParsed['sunrise'] = this.convertUnix(jsonResponse.sys.sunrise);
         this.weatherDataParsed['sunset'] = this.convertUnix(jsonResponse.sys.sunset);
-        
-
-        console.log(`Sunrise ${this.weatherDataParsed['sunrise']} sunset ${this.weatherDataParsed['sunset']}`);
-
-        // I'm leaving this for now, but later need to just pass into the object instead
-        // Of saving a variable for it. 
-
         this.weatherDataParsed['temperature'] = jsonResponse.main.temp;
-
-        console.log(`Current Temperature: ${this.weatherDataParsed['temperature']}`)
-
         this.weatherDataParsed['status'] = jsonResponse.weather[0].main;
 
-           // How to get area max/min. Keeping here for now
+        this.UI.pickFunction(this.weatherDataParsed);
+
+        // How to get area max/min. Keeping here for now
         // let maxTemp = jsonResponse.main.temp_max;
         // let minTemp = jsonResponse.main.temp_min;
-
-
-        console.log(`Current Weather: ${this.weatherDataParsed['status']}`)
-
-        this.UI.pickFunction(this.weatherDataParsed)
 
     }
 
@@ -97,10 +82,17 @@ class RequestHandler{
         // multiplied by 1000 so that the argument is in milliseconds, not seconds.
         let date = new Date(unixTimestamp * 1000);
         let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
 
-        let formattedTime = `${hours}:${minutes}:${seconds}`
+        // Changing sunset times to 12 hour format
+        
+        if( hours > 12){
+            hours -= 12
+        } 
+
+        let minutes = date.getMinutes();
+
+        let formattedTime = `${hours}:${minutes}`
+
 
         return formattedTime;
     }
