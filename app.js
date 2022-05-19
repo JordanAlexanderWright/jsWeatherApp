@@ -20,3 +20,10 @@ function someFunc(e) {
     requests.getLocation(zipCode);
 }
 
+let UI = new UIHandler; 
+
+console.log('hello');
+
+UI.pickFunction('location', 'Louisville');
+
+UI.pickFunction('status', "Raining");

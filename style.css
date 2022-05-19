@@ -2,17 +2,18 @@ html {
     font-size:large;
 }
 
+.userForm{
+    min-width: 70%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    max-width: 80%;
+}
 .weatherData {
     /* visibility: hidden; */
     border-style: inset;
-    box-sizing: content-box;
-    max-width: fit-content;
+    max-width: 80%;
     margin: 0 auto;
-    display: flex;
-}
-
-.searchBtn {
-
 }
 
 .heading {
@@ -22,11 +23,20 @@ html {
 }
 
 #dataContainer{
+    display: grid;
+    gap: 1rem;
     list-style: none;
     padding-left: 10px;
     padding-right: 10px;
+    justify-items: center;
 }
 
+@media (min-width:40em){
+    #dataContainer{
+       grid-template-columns: repeat(2, 1fr); 
+    }
+    
+}
 .first-color { 
 	background: #e7eaf6; 
 }

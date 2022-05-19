@@ -1,26 +1,32 @@
 class UIHandler {
 
     constructor(){
-
+        this.caseList = ['location', 'temperature', 'status', 'upcoming']
     }
 
+    // This function handles what UI element is going to be manipulated when Subitting data to ui
     pickFunction(type, data){
-        switch(type){
+        switch(this.caseList.indexOf(type.toLowerCase())){
 
-            case type === 'location':
+            case 0:
+                type === 'location';
                 console.log(`Location: ${data}`)
                 break;
             
-            case type === 'temperature':
+            case 1:
                 console.log(`Temperature: ${data}`)
                 break;
 
-            case type === 'status':
+            case 2:
                 console.log(`Status: ${data}`)
                 break;
 
-            case type === 'upcoming':
+            case 3:
                 console.log(`Upcoming Weather: ${data}`)
+                break;
+
+            default: 
+                console.log('Something Went Wrong');
                 break;
 
         }
