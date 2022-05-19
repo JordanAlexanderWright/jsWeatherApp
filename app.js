@@ -22,8 +22,13 @@ function someFunc(e) {
 
 let UI = new UIHandler; 
 
-console.log('hello');
+let testData = {
 
-UI.pickFunction('location', 'Louisville');
+    'location': 'Louisville',
+    'temperature': '80f',
+    'status': 'cloudy',
+    'upcoming': 'rain'
 
-UI.pickFunction('status', "Raining");
+}
+
+UI.pickFunction(testData);

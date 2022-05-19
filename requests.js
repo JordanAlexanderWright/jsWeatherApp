@@ -1,9 +1,10 @@
 class RequestHandler{
 
     constructor(apiDoc){
-        this.apiDoc = apiDoc
+        this.apiDoc = apiDoc;
         this.getAPIKey();
-        this.weatherDataParsed = {}
+        this.weatherDataParsed = {};
+        this.UI = new UIHandler;
     }
 
     //This function will get my API key from a document and then save it in my RequestHandler class.
@@ -85,6 +86,8 @@ class RequestHandler{
 
 
         console.log(`Current Weather: ${this.weatherDataParsed['status']}`)
+
+        this.UI.pickFunction(this.weatherDataParsed)
 
     }
 
