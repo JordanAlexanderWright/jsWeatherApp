@@ -3,6 +3,7 @@ class RequestHandler{
     constructor(apiDoc){
         this.apiDoc = apiDoc
         this.getAPIKey();
+        this.weatherDataParsed = {}
     }
 
     //This function will get my API key from a document and then save it in my RequestHandler class.
@@ -21,20 +22,29 @@ class RequestHandler{
         this.apiKey = response;
     }
 
+    // This function takes a US zip code, makes sure it's a string, then plugs it into to be converted for use
+    // IN the open weather api. 
     async getLocation(zip){
-        // let countryCode = 840;
+        
         let zipCode = zip.toString();
         let response = await fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode},US&appid=${this.apiKey}`)
         
-        
+        // THis await takes the JSON response from my fetch request, saves the location name in my data object
+        // that I will be passing to the UI to handle, then runs another function to get more data
         await response.json()
-            .then(locationData => {this.getWeather(locationData)})
+            
+            .then(locationData => {
+                this.getWeather(locationData)
+                this.weatherDataParsed['location'] = locationData.name
+                console.log(this.weatherDataParsed)
+            })
             .catch(() => console.log('there was an error'));
     }
 
+    // This function takes the longitude and latitude from the previous fetch request then makes another request
+    // To get the weather information from the requested zip code
     async getWeather(locationData){
       
-        let locationName = locationData.name;
         let locationLatitude = locationData.lat;
         let locationLongitude = locationData.lon;
 
@@ -49,26 +59,32 @@ class RequestHandler{
 
     handleWeather(jsonResponse){
 
+        // I save data from the response into my weatherDataParsed object in order to send to my UI. 
         console.log(jsonResponse);
         
-        //Sunrise/S unset
-        let requestTime = this.convertUnix(jsonResponse.dt)
-        let sunriseTime = this.convertUnix(jsonResponse.sys.sunrise);
-        let sunsetTime = this.convertUnix(jsonResponse.sys.sunset);
+        //Sunrise/ Sunset These do need to be converted from Unix
 
-        console.log(`Times: Calculated: ${requestTime} sunrise ${sunriseTime} sunset ${sunsetTime}`)
+        this.weatherDataParsed['sunrise'] = this.convertUnix(jsonResponse.sys.sunrise);
+        this.weatherDataParsed['sunset'] = this.convertUnix(jsonResponse.sys.sunset);
+        
 
-        //Temperatures
-        let currentTemp = jsonResponse.main.temp;
-        let maxTemp = jsonResponse.main.temp_max;
-        let minTemp = jsonResponse.main.temp_min;
+        console.log(`Sunrise ${this.weatherDataParsed['sunrise']} sunset ${this.weatherDataParsed['sunset']}`);
 
-        console.log(`Current Temperature: ${currentTemp} Area High: ${maxTemp} Area Low: ${minTemp}`)
+        // I'm leaving this for now, but later need to just pass into the object instead
+        // Of saving a variable for it. 
 
-        //Weather Status
-        let weatherStatus = jsonResponse.weather[0].main;
+        this.weatherDataParsed['temperature'] = jsonResponse.main.temp;
 
-        console.log(`Current Weather: ${weatherStatus}`)
+        console.log(`Current Temperature: ${this.weatherDataParsed['temperature']}`)
+
+        this.weatherDataParsed['status'] = jsonResponse.weather[0].main;
+
+           // How to get area max/min. Keeping here for now
+        // let maxTemp = jsonResponse.main.temp_max;
+        // let minTemp = jsonResponse.main.temp_min;
+
+
+        console.log(`Current Weather: ${this.weatherDataParsed['status']}`)
 
     }
 
